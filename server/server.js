@@ -23,7 +23,7 @@ const startApolloServer = async () => {
 
 
 	app.use('/graphql', expressMiddleware(server, {
-		context: authMiddleware
+		context: authMiddleware,
 		context: async ({ req }) => {
 			const context = { req };
 			await protect(context); // Apply the auth middleware
