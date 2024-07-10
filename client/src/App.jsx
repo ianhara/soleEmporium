@@ -34,7 +34,7 @@ function App() {
       <div>
       
           <Nav />
-   
+          <Outlet />
     
       </div>
     </ApolloProvider>

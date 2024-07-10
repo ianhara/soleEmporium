@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
 import App from "./App.jsx"
 
 
@@ -8,6 +9,7 @@ import Explore from './pages/Explore';
 import Stores from './pages/Stores';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Error from './pages/ErrorPage';
 
 
 
@@ -15,7 +17,7 @@ const router = createBrowserRouter([
     {
       path: '/',
       element: <App />,
-      errorElement: <NoMatch />,
+      errorElement: <Error />,
       children: [
         {
           index: true,
