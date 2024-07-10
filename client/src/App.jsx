@@ -1,40 +1,44 @@
-// import { useEffect } from 'react';
-// import { useDispatch } from 'react-redux';
-// import { Container } from 'react-bootstrap';
-// import { Outlet } from 'react-router-dom';
-// import Header from './components/Header';
-// import Footer from './components/Footer';
-// import { logout } from './slices/authSlice';
+import { Outlet } from 'react-router-dom';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from '@apollo/client';
 
-// import { ToastContainer } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import Nav from './components/Nav';
 
-const App = () => {
-  // const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   const expirationTime = localStorage.getItem('expirationTime');
-  //   if (expirationTime) {
-  //     const currentTime = new Date().getTime();
+const httpLink = createHttpLink({
+  uri: '/graphql',
+});
 
-  //     if (currentTime > expirationTime) {
-  //       dispatch(logout());
-  //     }
-  //   }
-  // }, [dispatch]);
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('id_token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+});
 
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
+
+function App() {
   return (
-    <>
-      {/* <ToastContainer />
-      <Header />
-      <main className='py-3'>
-        <Container>
-          <Outlet />
-        </Container>
-      </main>
-      <Footer /> */}
-    </>
+    <ApolloProvider client={client}>
+      <div>
+      
+          <Nav />
+   
+    
+      </div>
+    </ApolloProvider>
   );
-};
+}
 
 export default App;
