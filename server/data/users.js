@@ -1,11 +1,11 @@
-import bcrypt from "bcryptjs";
+const bcrypt = require("bcrypt");
 
 const users = [
   {
     name: "Armoni",
     email: "admin@sneakyheads.com",
     password: bcrypt.hashSync("Admin123", 10),
-    isAdmin: true,
+    
   },
   {
     name: "Ian",
@@ -29,4 +29,4 @@ const users = [
   },
 ];
 
-export default users;
+module.exports = users;
