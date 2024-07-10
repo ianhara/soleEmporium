@@ -1,7 +1,11 @@
-import jwt from 'jsonwebtoken';
-import User from '../models/User.js';
-import { AuthenticationError } from 'apollo-server-express';
-
+const jwt = require('jsonwebtoken');
+const { User } = require('../models');
+const { GraphQLError } = require('graphql');
+const AuthenticationError = new GraphQLError('Could not authenticate user.', {
+  extensions: {
+    code: 'UNAUTHENTICATED',
+  },
+})
 // User must be authenticated
 const protect = async (context) => {
   let token;
@@ -17,16 +21,16 @@ const protect = async (context) => {
       const user = await User.findById(decoded.userId).select('-password');
 
       if (!user) {
-        throw new AuthenticationError('Not authorized, user not found');
+        throw AuthenticationError
       }
 
       context.user = user;
     } catch (error) {
       console.error(error);
-      throw new AuthenticationError('Not authorized, token failed');
+      throw AuthenticationError
     }
   } else {
-    throw new AuthenticationError('Not authorized, no token');
+    throw AuthenticationError
   }
 };
 
@@ -39,4 +43,4 @@ const admin = (context) => {
   }
 };
 
-export { protect, admin };
+module.exports = { protect, admin };
