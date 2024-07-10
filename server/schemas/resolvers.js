@@ -93,7 +93,7 @@ const resolvers = {
     // mutation to create a user 
     createUser: async (_, { userInput }) => {
         try {
-        const newUser = await 
+      
         const newUser = await User.create(userInput);
         return newUser;
         } catch (error) {

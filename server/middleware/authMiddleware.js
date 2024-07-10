@@ -1,6 +1,6 @@
-import jwt from 'jsonwebtoken';
-import User from '../models/User.js';
-import { AuthenticationError } from 'apollo-server-express';
+const jwt = require('jsonwebtoken');
+const { User } = require('../models');
+const { AuthenticationError } = require('apollo-server-express');
 
 // User must be authenticated
 const protect = async (context) => {
@@ -39,4 +39,4 @@ const admin = (context) => {
   }
 };
 
-export { protect, admin };
+module.exports = { protect, admin };
