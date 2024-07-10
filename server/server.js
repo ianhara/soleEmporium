@@ -2,8 +2,8 @@ const express = require('express');
 const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 const path = require('path');
-// const { authMiddleware } = require('./utils/auth');
-
+const { authMiddleware } = require('./utils/auth');
+const { protect } = require('./middleware/authMiddleware');  
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 
@@ -23,14 +23,19 @@ const startApolloServer = async () => {
 
 
 	app.use('/graphql', expressMiddleware(server, {
-		// context: authMiddleware
+		context: authMiddleware
+		context: async ({ req }) => {
+			const context = { req };
+			await protect(context); // Apply the auth middleware
+			return context;
+		}
 	}));
 
 	if (process.env.NODE_ENV === 'production') {
-		// In production, when we no longer need to use the vite dev server, we serve the React app that is in the dist/ directory 
+		// In production, serve the React app from the dist/ directory
 		app.use(express.static(path.join(__dirname, '../client/dist')));
 
-		// Set up a wildcard route on our server since React application will handle its own routing 
+		// Set up a wildcard route to handle routing through React
 		app.get('*', (req, res) => {
 			res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 		});
@@ -38,8 +43,8 @@ const startApolloServer = async () => {
 
 	db.once('open', () => {
 		app.listen(PORT, () => {
-		console.log(`API server running on port ${PORT}!`);
-		console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
+			console.log(`API server running on port ${PORT}!`);
+			console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
 		});
 	});
 };
