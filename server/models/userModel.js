@@ -1,13 +1,17 @@
-const mongoose = require("mongoose");
-// const bcrypt = require("bcryptjs");
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+// import orders 
 
-const userSchema = mongoose.Schema(
+const userSchema = new Schema(
   {
-    name: {
+    firstName: {
       type: String,
       required: true,
     },
-
+    lastName:{
+      type: String,
+      required: true,
+    },
     email: {
       type: String,
       required: true,
@@ -17,31 +21,22 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    isAdmin: {
-      type: Boolean,
+    address: {
+      type: {
+        street: String,
+        city: String,
+        state: String,
+        zip: String, 
+        country: String,
+      },
       required: true,
-      default: false,
-    },
+    }
   },
   {
     timestamps: true,
   }
 );
 
-// Match user entered password to hashed password in database
-userSchema.methods.matchPassword = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
-};
-
-// Encrypt password using bcrypt
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
-    next();
-  }
-
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-});
 
 const User = mongoose.model("User", userSchema);
 
