@@ -1,120 +1,108 @@
 const typeDefs = `
+  type Product {
+    _id: ID!
+    name: String!
+    images: [String]!
+    description: String!
+    price: Float!
+    size: [Float]
+    stock: Int!
+  }
+
   type Order {
     _id: ID!
-    user: ID!
-    orderItems: [OrderItem!]!
-    shippingAddress: ShippingAddress!
-    paymentMethod: String!
-    paymentResult: PaymentResult
-    itemsPrice: Float!
-    taxPrice: Float!
-    shippingPrice: Float!
+    user: User
+    products: [OrderProduct!]!
+    shippingAddress: Address!
     totalPrice: Float!
-    isPaid: Boolean!
-    paidAt: String
-    isDelivered: Boolean!
-    deliveredAt: String
+    status: String!
     createdAt: String!
-    updatedAt: String!
-  }
-
-  type OrderItem {
-    name: String!
-    qty: Int!
-    shoeSize: Float!
-    image: String!
-    price: Float!
-    product: ID!
-  }
-
-  type ShippingAddress {
-    address: String!
-    city: String!
-    postalCode: String!
-    country: String!
-  }
-
-  type PaymentResult {
-    id: String!
-    status: String!
-    update_time: String!
-    email_address: String!
-  }
-
-  input OrderInput {
-    user: ID!
-    orderItems: [OrderItemInput!]!
-    shippingAddress: ShippingAddressInput!
-    paymentMethod: String!
-    paymentResult: PaymentResultInput
-    itemsPrice: Float!
-    taxPrice: Float!
-    shippingPrice: Float!
-    totalPrice: Float!
-    isPaid: Boolean!
-    paidAt: String
-    isDelivered: Boolean!
-    deliveredAt: String
-  }
-
-  input OrderItemInput {
-    name: String!
-    qty: Int!
-    shoeSize: Float!
-    image: String!
-    price: Float!
-    product: ID!
-  }
-
-  input ShippingAddressInput {
-    address: String!
-    city: String!
-    postalCode: String!
-    country: String!
-  }
-
-  input PaymentResultInput {
-    id: String!
-    status: String!
-    update_time: String!
-    email_address: String!
   }
 
   type User {
     _id: ID!
-    name: String!
+    firstName: String!
+    lastName: String!  
     email: String!
-    isAdmin: Boolean!
-    createdAt: String!
-    updatedAt: String!
+    address: Address!
+  }
+
+  type OrderProduct {
+    _id: ID!
+    quantity: Int!
+    price: Float!
+  }
+
+  type Address{
+    street: String!
+    city: String!
+    state: String
+    zip: String!
+    country: String!
+  }
+
+  input CreateProductInput{
+    name: String!
+    description: String!
+    price: Float!
+    size: [Float]!
+    stock: Int!
+    images: [String]!
+  }
+
+  input AddressInput {
+    street: String!
+    city: String!
+    state: String
+    zip: String!
+    country: String!
   }
 
   input CreateUserInput {
-    name: String!
+    firstName: String!
+    lastName: String! 
     email: String!
     password: String!
-    isAdmin: Boolean
+    address: AddressInput!
   }
 
   input UpdateUserInput {
-    name: String
+    firstName: String
+    lastName: String
     email: String
     password: String
-    isAdmin: Boolean
+    address: AddressInput
+  }
+
+  input OrderProductInput {
+    productId: ID!
+    quantity: Int!
+    price: Float!
+  }
+
+  input OrderUpdateInput{
+    userId: ID!
+    products: [OrderProductInput!]!
+    shippingAddress: AddressInput
+    totalPrice: Float
+    status: String
   }
 
   type Query {
-    orders: [Order!]!
+    products: [Product]
+    product(productId: ID!): Product
+    orders: [Order]
     order(orderId: ID!): Order
-    users: [User!]!
+    users: [User]
     user(userId: ID!): User
   }
 
   type Mutation {
-    createOrder(userInput: OrderInput!): Order!
-    updateOrder(orderId: ID!, updateInput: OrderInput!): Order!
+    createProduct(input: CreateProductInput!): Product
+    createOrder(userId: ID!, products: [OrderProductInput!]!, totalPrice: Float!, shippingAddress: AddressInput!): Order
+    updateOrder(orderId: ID!, updateInput: OrderUpdateInput!): Order!
     deleteOrder(orderId: ID!): Order!
-    createUser(userInput: CreateUserInput!): User!
+    createUser(input: CreateUserInput!): User
     updateUser(userId: ID!, updateInput: UpdateUserInput!): User!
     deleteUser(userId: ID!): User!
   }

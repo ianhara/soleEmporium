@@ -1,10 +1,14 @@
-const mongoose = require("mongoose");
-const {productSchema}= require("./productModel")
-// const bcrypt = require("bcrypt");
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+// import orders 
 
-const userSchema = mongoose.Schema(
+const userSchema = new Schema(
   {
-    name:{
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName:{
       type: String,
       required: true,
     },
@@ -17,16 +21,21 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    cart:[
-      productSchema
-    ]
-
+    address: {
+      type: {
+        street: String,
+        city: String,
+        state: String,
+        zip: String, 
+        country: String,
+      },
+      required: true,
+    }
   },
   {
     timestamps: true,
   }
 );
-
 
 
 const User = mongoose.model("User", userSchema);
