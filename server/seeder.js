@@ -1,21 +1,29 @@
 const users = require('./data/users')
 const products = require('./data/products')
-const { Product, User } = require('./models')
+const orders = require('./data/orders');
+const { Product, User, Order } = require('./models')
 const db = require('./config/connection');
 
 const init = async () => {
     await Product.deleteMany()
     await User.deleteMany()
+    await Order.deleteMany()
     await Promise.all(
         products.map(async p => {
             await Product.create(p)
         }))
     await Promise.all(
         users.map(async p => {
-            await User.create(p)
+            const user = await User.create(p)
+            console.log(user)
+            await Promise.all(
+                orders.map(async p => {
+                    const newOrder = {...p, user: user._id}
+                    await Order.create(newOrder)
+                }))
         }))
         console.log("done")
-        process.exit(0)
+        process.exit(0) 
 
 
 }
