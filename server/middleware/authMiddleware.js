@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 
-const { AuthenticationError } = require('apollo-server-express');
 const { GraphQLError } = require('graphql');
 const AuthenticationError = new GraphQLError('Could not authenticate user.', {
   extensions: {
