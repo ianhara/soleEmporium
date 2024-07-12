@@ -20,19 +20,17 @@ const protect = async (context) => {
   if (token) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      const user = await User.findById(decoded.userId).select('-password');
+      const user = await User.findById(decoded._id).select('-password');
 
       if (!user) {
         throw AuthenticationError
       }
 
-      context.user = user;
+      return { user }
     } catch (error) {
       console.error(error);
       throw AuthenticationError
     }
-  } else {
-    throw AuthenticationError
   }
 };
 

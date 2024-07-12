@@ -30,6 +30,10 @@ const userSchema = new Schema(
         country: String,
       },
       required: true,
+    },
+    cart: {
+      type: Schema.Types.ObjectId,
+      ref: "Cart",
     }
   },
   {

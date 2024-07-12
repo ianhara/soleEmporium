@@ -102,6 +102,7 @@ const typeDefs = `
     createOrder(userId: ID!, products: [OrderProductInput!]!, totalPrice: Float!, shippingAddress: AddressInput!): Order
     updateOrder(orderId: ID!, updateInput: OrderUpdateInput!): Order!
     deleteOrder(orderId: ID!): Order!
+    loginUser(email: String!, password: String!): String
     createUser(input: CreateUserInput!): User
     updateUser(userId: ID!, updateInput: UpdateUserInput!): User!
     deleteUser(userId: ID!): User!
