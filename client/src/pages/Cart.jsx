@@ -1,5 +1,5 @@
 
-const Signup = () => {
+const Cart = () => {
     return (
       <div className="signUp">
         
@@ -8,4 +8,4 @@ const Signup = () => {
   };
   
   
-  export default Signup ;
+  export default Cart;
