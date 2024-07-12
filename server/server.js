@@ -3,20 +3,20 @@ const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 const path = require('path');
 const { authMiddleware } = require('./middleware/authMiddleware');
-const { protect } = require('./middleware/authMiddleware');  
+// const { protect } = require('./middleware/authMiddleware');  
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
-const init = require('./seeder')
+// const init = require('./seeder')
 const PORT = process.env.PORT || 3001;
 const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: async ({ req }) => {
-    const context = { req };
-    await protect(context); // Apply the auth middleware
-    return context;
-  }
+  // context: async ({ req }) => {
+  //   const context = { req };
+  //   await protect(context); // Apply the auth middleware
+  //   return context;
+  // }
 });
 
 // Create a new instance of an Apollo Server with the GraphQL schema
