@@ -1,10 +1,24 @@
-const {User, Order, Product} = require('../models');
+const { User, Order, Product } = require('../models');
+const bcrypt = require('bcrypt');
+const { configDotenv } = require('dotenv');
+const jwt = require('jsonwebtoken')
+const { GraphQLError } = require('graphql');
+const AuthenticationError = new GraphQLError('Could not authenticate user.', {
+  extensions: {
+    code: 'UNAUTHENTICATED',
+  },
+})
+configDotenv()
 
 const resolvers = {
   Query: {
     // WORKS
-     // get all products
-     products: async () => {
+    // get all products
+    products: async (_, __, context) => {
+
+      if(!context.user)
+        throw AuthenticationError
+
       try {
         const products = await Product.find({});
         return products;
@@ -14,7 +28,9 @@ const resolvers = {
     },
     // WORKS
     // get single product
-    product: async (_, { productId }) => {
+    product: async (_, { productId }, context) => {
+      if(!context.user)
+        throw AuthenticationError
       try {
         const product = await Product.findById(productId);
         if (!product) {
@@ -31,7 +47,7 @@ const resolvers = {
       try {
         const orders = await Order.find({})
           .populate('user')
-          // .populate('products.productId');
+        // .populate('products.productId');
         return orders;
       } catch (error) {
         throw new Error('Failed to fetch orders!');
@@ -43,7 +59,7 @@ const resolvers = {
       try {
         const order = await Order.findById(orderId)
           .populate('user')
-          // .populate('products.productId');
+        // .populate('products.productId');
         if (!order) {
           throw new Error('Order not found!');
         }
@@ -54,7 +70,7 @@ const resolvers = {
       }
     },
     // WORKS
-     // get all users
+    // get all users
     users: async () => {
       try {
         const users = await User.find({});
@@ -66,15 +82,15 @@ const resolvers = {
     //WORKS
     // get single user
     user: async (_, { userId }) => {
-        try {
-          const user = await User.findById(userId);
-          if (!user) {
-            throw new Error('User not found!');
-          }
-          return user;
-        } catch (error) {
-          throw new Error('Failed to fetch user!');
+      try {
+        const user = await User.findById(userId);
+        if (!user) {
+          throw new Error('User not found!');
         }
+        return user;
+      } catch (error) {
+        throw new Error('Failed to fetch user!');
+      }
     },
   },
 
@@ -82,9 +98,9 @@ const resolvers = {
     // WORKS!!
     // mutation to create product 
     createProduct: async (_, { input }) => {
-      const {name, description, price, size, stock, images} = input;
+      const { name, description, price, size, stock, images } = input;
       try {
-        const newProduct = new Product({ name, description, price, size, stock, images});
+        const newProduct = new Product({ name, description, price, size, stock, images });
         await newProduct.save();
         return newProduct;
       } catch (error) {
@@ -95,7 +111,7 @@ const resolvers = {
     //mutation to create a new order
     createOrder: async (_, { userId, products, totalPrice, shippingAddress }) => {
       try {
-        const newOrder = new Order({ user: userId, products, totalPrice, shippingAddress});
+        const newOrder = new Order({ user: userId, products, totalPrice, shippingAddress });
         await newOrder.save();
         return newOrder;
       } catch (error) {
@@ -132,11 +148,30 @@ const resolvers = {
       }
     },
 
+    // login user
+    loginUser: async (_, { email, password }) => {
+
+      let foundUser = await User.findOne({ email: email })
+      if (!foundUser) {
+        throw new Error("Not found")
+      }
+
+      try {
+        await bcrypt.compare(foundUser.password, password)
+      } catch (error) {
+        console.error(error)
+      }
+
+      let payload = { email: foundUser.email, _id: foundUser._id }
+      return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '2h' })
+
+    },
+
     // mutation to create a user 
     createUser: async (_, { input }) => {
-      const {firstName, lastName, email, password, address } = input;
+      const { firstName, lastName, email, password, address } = input;
       try {
-        const newUser = new User({ firstName, lastName, email, password, address});
+        const newUser = new User({ firstName, lastName, email, password, address });
         await newUser.save();
         return newUser;
       } catch (error) {
@@ -147,30 +182,30 @@ const resolvers = {
 
     //mutation to update a user
     updateUser: async (_, { userId, updateInput }) => {
-        try {
-            const updatedUser = await User.findByIdAndUpdate(userId, updateInput, { new: true });
-            if (!updatedUser) {
-              throw new Error('User not found');
-            }
-            return updatedUser;
-        } catch (error) {
-          console.error(error);
-          throw new Error('Failed to update user');
+      try {
+        const updatedUser = await User.findByIdAndUpdate(userId, updateInput, { new: true });
+        if (!updatedUser) {
+          throw new Error('User not found');
         }
-      },
+        return updatedUser;
+      } catch (error) {
+        console.error(error);
+        throw new Error('Failed to update user');
+      }
+    },
 
     //mutation to delete user
-      deleteUser: async (_, { userId }) => {
-        try {
-          const deletedUser = await User.findByIdAndDelete(userId);
-          if (!deletedUser) {
-            throw new Error('User not found');
-          }
-          return deletedUser;
-        } catch (error) {
-          console.error(error);
-          throw new Error('Failed to delete user');
+    deleteUser: async (_, { userId }) => {
+      try {
+        const deletedUser = await User.findByIdAndDelete(userId);
+        if (!deletedUser) {
+          throw new Error('User not found');
         }
+        return deletedUser;
+      } catch (error) {
+        console.error(error);
+        throw new Error('Failed to delete user');
+      }
     },
   },
 

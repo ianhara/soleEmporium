@@ -12,7 +12,7 @@ const orderProductSchema = new mongoose.Schema({
     required: true,
   },
   price: {
-    type: Number, 
+    type: Number,
     required: true,
   }
 });
@@ -24,7 +24,7 @@ const orderSchema = new Schema(
       required: true,
     },
     shippingAddress: {
-      type:{
+      type: {
         street: String,
         city: String,
         state: String,
@@ -36,7 +36,7 @@ const orderSchema = new Schema(
       type: Number,
       required: true,
     },
-    status:{
+    status: {
       type: String,
       enum: ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'],
       default: 'Pending',
@@ -55,4 +55,4 @@ const orderSchema = new Schema(
 
 const Order = mongoose.model("Order", orderSchema);
 
-module.exports = Order;
+module.exports = { Order, orderProductSchema };
