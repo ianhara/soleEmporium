@@ -2,10 +2,10 @@ const express = require('express');
 const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 const path = require('path');
-const { authMiddleware } = require('./middleware/authMiddleware');
-// const { protect } = require('./middleware/authMiddleware');  
+const authMiddleware = require('./middleware/authMiddleware');
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
+
 // const init = require('./seeder')
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -27,15 +27,17 @@ const startApolloServer = async () => {
   app.use(express.json());
 
   app.use('/graphql', expressMiddleware(server, {
-    context: authMiddleware
+    context: authMiddleware.protect
   }));
 
   if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/dist')));
+    // In production, serve the React app from the dist/ directory
+    app.use(express.static(path.join(__dirname, './dist')));
 
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-    });
+    // // Set up a wildcard route to handle routing through React
+    // app.get('*', (req, res) => {
+    //   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+    // });
   }
 
   db.once('open', () => {

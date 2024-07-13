@@ -5,7 +5,7 @@ const typeDefs = `
     images: [String]!
     description: String!
     price: Float!
-    size: [Float]
+    size: [Float]!
     stock: Int!
   }
 
@@ -24,19 +24,28 @@ const typeDefs = `
     firstName: String!
     lastName: String!  
     email: String!
-    address: Address!
+    address: Address
   }
 
   type OrderProduct {
     _id: ID!
     quantity: Int!
+    size: [Float]!
     price: Float!
   }
 
   type Address{
     street: String!
     city: String!
-    state: String
+    state: String!
+    zip: String!
+    country: String!
+  }
+
+  input AddressInput {
+    street: String!
+    city: String!
+    state: String!
     zip: String!
     country: String!
   }
@@ -50,12 +59,18 @@ const typeDefs = `
     images: [String]!
   }
 
-  input AddressInput {
-    street: String!
-    city: String!
-    state: String
-    zip: String!
-    country: String!
+  input CreateOrderInput{
+    userId: ID!
+    products: [OrderProductInput!]!
+    totalPrice: Float!
+    shippingAddress: AddressInput!
+  }
+
+  input OrderProductInput {
+    productId: ID!
+    quantity: Int!
+    size: [Float]!
+    price: Float!
   }
 
   input CreateUserInput {
@@ -63,10 +78,11 @@ const typeDefs = `
     lastName: String! 
     email: String!
     password: String!
-    address: AddressInput!
+    address: AddressInput
   }
 
   input UpdateUserInput {
+    userId: ID!
     firstName: String
     lastName: String
     email: String
@@ -74,13 +90,8 @@ const typeDefs = `
     address: AddressInput
   }
 
-  input OrderProductInput {
-    productId: ID!
-    quantity: Int!
-    price: Float!
-  }
-
-  input OrderUpdateInput{
+  input UpdateOrderInput{
+    orderId: ID!
     userId: ID!
     products: [OrderProductInput!]!
     shippingAddress: AddressInput
@@ -99,12 +110,13 @@ const typeDefs = `
 
   type Mutation {
     createProduct(input: CreateProductInput!): Product
-    createOrder(userId: ID!, products: [OrderProductInput!]!, totalPrice: Float!, shippingAddress: AddressInput!): Order
-    updateOrder(orderId: ID!, updateInput: OrderUpdateInput!): Order!
+    createOrder(input: CreateOrderInput!): Order
+    updateOrder(updateInput: UpdateOrderInput!): Order!
     deleteOrder(orderId: ID!): Order!
     createUser(input: CreateUserInput!): User
-    updateUser(userId: ID!, updateInput: UpdateUserInput!): User!
+    updateUser(updateInput: UpdateUserInput!): User!
     deleteUser(userId: ID!): User!
+    loginUser(email: String!, password: String!): String
   }
 `;
 

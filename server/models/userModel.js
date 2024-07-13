@@ -29,7 +29,10 @@ const userSchema = new Schema(
         zip: String, 
         country: String,
       },
-      required: true,
+    },
+    cart: {
+      type: Schema.Types.ObjectId,
+      ref: "Cart",
     }
   },
   {

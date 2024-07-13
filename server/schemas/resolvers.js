@@ -1,10 +1,23 @@
-const {User, Order, Product} = require('../models');
+const { User, Order, Product } = require('../models');
+const bcrypt = require('bcrypt');
+const { configDotenv } = require('dotenv');
+const jwt = require('jsonwebtoken')
+const { GraphQLError } = require('graphql');
+const AuthenticationError = new GraphQLError('Could not authenticate user.', {
+  extensions: {
+    code: 'UNAUTHENTICATED',
+  },
+})
+configDotenv()
 
 const resolvers = {
   Query: {
-    // WORKS
-     // get all products
-     products: async () => {
+    // get all products
+    products: async (_, __, context) => {
+
+      if(!context.user)
+        throw AuthenticationError
+
       try {
         const products = await Product.find({});
         return products;
@@ -12,9 +25,10 @@ const resolvers = {
         throw new Error('Failed to fetch products!');
       }
     },
-    // WORKS
     // get single product
-    product: async (_, { productId }) => {
+    product: async (_, { productId }, context) => {
+      if(!context.user)
+        throw AuthenticationError
       try {
         const product = await Product.findById(productId);
         if (!product) {
@@ -31,7 +45,6 @@ const resolvers = {
       try {
         const orders = await Order.find({})
           .populate('user')
-          // .populate('products.productId');
         return orders;
       } catch (error) {
         throw new Error('Failed to fetch orders!');
@@ -43,7 +56,6 @@ const resolvers = {
       try {
         const order = await Order.findById(orderId)
           .populate('user')
-          // .populate('products.productId');
         if (!order) {
           throw new Error('Order not found!');
         }
@@ -53,8 +65,7 @@ const resolvers = {
         throw new Error('Failed to fetch order!');
       }
     },
-    // WORKS
-     // get all users
+    // get all users
     users: async () => {
       try {
         const users = await User.find({});
@@ -63,23 +74,22 @@ const resolvers = {
         throw new Error('Failed to fetch users!');
       }
     },
-    //WORKS
     // get single user
     user: async (_, { userId }) => {
-        try {
-          const user = await User.findById(userId);
-          if (!user) {
-            throw new Error('User not found!');
-          }
-          return user;
-        } catch (error) {
-          throw new Error('Failed to fetch user!');
+      try {
+        const user = await User.findById(userId);
+        if (!user) {
+          throw new Error('User not found!');
         }
+        return user;
+      } catch (error) {
+        throw new Error('Failed to fetch user!');
+      }
     },
   },
 
   Mutation: {
-    // WORKS!!
+
     // mutation to create product 
     createProduct: async (_, { input }) => {
       const {name, description, price, size, stock, images} = input;
@@ -92,8 +102,10 @@ const resolvers = {
         throw new Error('Failed to create product!');
       }
     },
+
     //mutation to create a new order
-    createOrder: async (_, { userId, products, totalPrice, shippingAddress }) => {
+    createOrder: async (_, { input }) => {
+      const { userId, products, totalPrice, shippingAddress} = input;
       try {
         const newOrder = new Order({ user: userId, products, totalPrice, shippingAddress});
         await newOrder.save();
@@ -105,9 +117,10 @@ const resolvers = {
     },
 
     //mutation to update an existing order
-    updateOrder: async (_, { orderId, updateInput }) => {
+    updateOrder: async (_, { updateInput }) => {
+      const { orderId, ...updateData} = updateInput;
       try {
-        const updatedOrder = await Order.findByIdAndUpdate(orderId, updateInput, { new: true });
+        const updatedOrder = await Order.findByIdAndUpdate(orderId, updateData, { new: true });
         if (!updatedOrder) {
           throw new Error('Order not found');
         }
@@ -125,6 +138,7 @@ const resolvers = {
         if (!deletedOrder) {
           throw new Error('Order not found');
         }
+        console.log("Order deleted successfully!")
         return deletedOrder;
       } catch (error) {
         console.error(error);
@@ -132,12 +146,47 @@ const resolvers = {
       }
     },
 
+    // login user
+    loginUser: async (_, { email, password }) => {
+
+      let foundUser = await User.findOne({ email: email })
+      if (!foundUser) {
+        throw new Error("Not found")
+      }
+
+      try {
+        await bcrypt.compare(foundUser.password, password)
+      } catch (error) {
+        console.error(error)
+      }
+
+      let payload = { email: foundUser.email, _id: foundUser._id }
+      return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '2h' })
+
+    },
+
     // mutation to create a user 
     createUser: async (_, { input }) => {
       const {firstName, lastName, email, password, address } = input;
       try {
-        const newUser = new User({ firstName, lastName, email, password, address});
+        // checks if email belongs to any other user account
+        const existingUser = await User.findOne({ email});
+        if(existingUser) {
+          throw new Error('User already exists with this email.');
+        }
+        // hashes the provided password
+        const hashedPassword = await bcrypt.hash(password, 10);
+        // creates a new user
+        const newUser = new User({
+          firstName, 
+          lastName,
+          email,
+          password: hashedPassword,
+          address
+        });
+        // saves the newly created user
         await newUser.save();
+        console.log("New user created successfully!");
         return newUser;
       } catch (error) {
         console.error(error);
@@ -146,31 +195,34 @@ const resolvers = {
     },
 
     //mutation to update a user
-    updateUser: async (_, { userId, updateInput }) => {
-        try {
-            const updatedUser = await User.findByIdAndUpdate(userId, updateInput, { new: true });
-            if (!updatedUser) {
-              throw new Error('User not found');
-            }
-            return updatedUser;
-        } catch (error) {
-          console.error(error);
-          throw new Error('Failed to update user');
+    updateUser: async (_, { updateInput }) => {
+      const { userId, ...updateFields } = updateInput;
+      try {
+        const updatedUser = await User.findByIdAndUpdate(userId, updateFields, { new: true });
+        if (!updatedUser) {
+          throw new Error('User not found');
         }
-      },
+        console.log("Successfully update user information!")
+        return updatedUser;
+      } catch (error) {
+        console.error(error);
+        throw new Error('Failed to update user');
+      }
+    },
 
     //mutation to delete user
-      deleteUser: async (_, { userId }) => {
-        try {
-          const deletedUser = await User.findByIdAndDelete(userId);
-          if (!deletedUser) {
-            throw new Error('User not found');
-          }
-          return deletedUser;
-        } catch (error) {
-          console.error(error);
-          throw new Error('Failed to delete user');
+    deleteUser: async (_, { userId }) => {
+      try {
+        const deletedUser = await User.findByIdAndDelete(userId);
+        if (!deletedUser) {
+          throw new Error('User not found');
         }
+        console.log("User deleted successfully.");
+        return deletedUser;
+      } catch (error) {
+        console.error(error);
+        throw new Error('Failed to delete user');
+      }
     },
   },
 
