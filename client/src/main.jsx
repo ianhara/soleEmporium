@@ -12,6 +12,8 @@ import Stores from './pages/Stores.jsx';
 
 import Error from './pages/ErrorPage';
 
+import ProductInfo from './pages/ProductInfo.jsx'
+
 
 
 const router = createBrowserRouter([
@@ -27,6 +29,10 @@ const router = createBrowserRouter([
        {
         path: '/stores',
         element: <Stores />
+      }, 
+      {
+        path: '/products/:id',
+        element: <ProductInfo />
       }, 
     
     ],
