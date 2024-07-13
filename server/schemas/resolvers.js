@@ -16,7 +16,7 @@ const resolvers = {
     products: async (_, __, context) => {
 
       if(!context.user)
-        throw AuthenticationError
+        // throw AuthenticationError
 
       try {
         const products = await Product.find({});
