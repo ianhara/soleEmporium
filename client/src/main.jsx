@@ -8,7 +8,7 @@ import App from "./App.jsx"
 
 import Home from './pages/Home';
 
-import Stores from './pages/Cart';
+import Stores from './pages/Stores.jsx';
 
 import Error from './pages/ErrorPage';
 
