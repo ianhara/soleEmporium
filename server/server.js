@@ -19,7 +19,7 @@ const server = new ApolloServer({
   // }
 });
 
-// Create a new instance of an Apollo Server with the GraphQL schema
+// Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {
   await server.start();
 
@@ -49,4 +49,4 @@ const startApolloServer = async () => {
 };
 
 // Call the async function to start the server
-startApolloServer();
+  startApolloServer();
