@@ -1,5 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 
 import App from "./App.jsx"
 
@@ -21,19 +23,12 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />
-      }, {
-        path: '/explore',
-        element: <Explore />
-      }, {
+      },
+       {
         path: '/stores',
         element: <Stores />
-      }, {
-        path: '/login',
-        element: <Login />
-      }, {
-        path: '/signup',
-        element: <Signup />
-      },
+      }, 
+    
     ],
   },
 ]);
