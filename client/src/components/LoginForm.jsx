@@ -14,36 +14,31 @@ const LoginForm = () => {
     };
   
     const handleFormSubmit = async (event) => {
-      event.preventDefault();
-  
-      // check if form has everything (as per react-bootstrap docs)
-      const form = event.currentTarget;
-      if (form.checkValidity() === false) {
         event.preventDefault();
-        event.stopPropagation();
-      }
-  
-      try {
-        const response = await loginUser(userFormData);
-  
-        if (!response.ok) {
-          throw new Error('something went wrong!');
+      
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+          event.stopPropagation();
+        } else {
+          try {
+            const response = await loginUser(userFormData);
+      
+            if (!response.ok) {
+              throw new Error('something went wrong!');
+            }
+      
+            const { token } = await response.json();
+            Auth.login(token);
+          } catch (err) {
+            console.error(err);
+            setShowAlert(true);
+          }
+      
+          setUserFormData({ email: '', password: '' }); // Corrected reset
         }
-  
-        const { token, user } = await response.json();
-        console.log(user);
-        Auth.login(token);
-      } catch (err) {
-        console.error(err);
-        setShowAlert(true);
-      }
-  
-      setUserFormData({
-        username: '',
-        email: '',
-        password: '',
-      });
-    };
+      
+        setValidated(true); // Update the validated state to trigger re-render
+      };
   
     return (
       <>
