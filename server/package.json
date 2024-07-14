@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
-    "seed": "node seeder.js",
+    "seed": "node seeder/seeder.js",
     "build": "cd client && npm run build"
   },
   "keywords": [],

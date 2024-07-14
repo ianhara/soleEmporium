@@ -1,0 +1,67 @@
+[
+    {
+      "firstName": "Armoni",
+      "lastName": "Prince",
+      "email": "admin@sneakyheads.com",
+      "password": "$2b$10$eFjRfC4T/gBTJ9hmGmU3zeucA/nb1qx0uwMYzTv.RZoYLUqSbR2YO",
+      "address": {
+        "street": "123 JavaScript Ln",
+        "city": "Raleigh",
+        "state": "North Carolina",
+        "zip": "27513",
+        "country": "USA"
+      }
+    },
+    {
+      "firstName": "Ian",
+      "lastName": "Hara",
+      "email": "ian@ian.com",
+      "password": "$2b$10$GTNb/PeRXIQ2nVaHUIhKNOI74KqueqtUiZ6rrPZruSvRbqliuDgMW",
+      "address": {
+        "street": "123 React Rd",
+        "city": "Raleigh",
+        "state": "North Carolina",
+        "zip": "27513",
+        "country": "USA"
+      }
+    },
+    {
+      "firstName": "Juju",
+      "lastName": "Nakarmi",
+      "email": "juju@juju.com",
+      "password": "$2b$10$.598HsNV0d.Rys2YXJKPsOegrq7GPeG14gj33bOW/gpGG8QImFU1q",
+      "address": {
+        "street": "123 Express St",
+        "city": "Raleigh",
+        "state": "North Carolina",
+        "zip": "27513",
+        "country": "USA"
+      }
+    },
+    {
+      "firstName": "Sandy",
+      "lastName": "Vazquez",
+      "email": "sandy@sandy.com",
+      "password": "$2b$10$NRKSjrueyLNCWnLvjQxiZOQ.oMGeoAJcbYyK4WhT6/EoWUOzCDK7G",
+      "address": {
+        "street": "123 JavaScript Ln",
+        "city": "Raleigh",
+        "state": "North Carolina",
+        "zip": "27513",
+        "country": "USA"
+      }
+    },
+    {
+      "firstName": "Isaac",
+      "lastName": "Mckoy",
+      "email": "isaac@isaac.com",
+      "password": "$2b$10$YcLq6xKt2aSljg221RUu4OR/avcTFXfqbcEnYE/hhscHV8ULXcjqe",
+      "address": {
+        "street": "123 React Rd",
+        "city": "Raleigh",
+        "state": "North Carolina",
+        "zip": "27513",
+        "country": "USA"
+      }
+    }
+  ]

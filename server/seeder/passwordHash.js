@@ -1,5 +1,7 @@
 const bcrypt = require("bcrypt");
+const fs = require("fs");
 
+// Hash the passwords before seeding users
 const users = [
   {
     firstName: "Armoni",
@@ -68,4 +70,14 @@ const users = [
   },
 ];
 
-module.exports = users;
+// converts users array to JSON format
+const usersSeedJson = JSON.stringify(users, null, 2);
+
+// writes JSON to a file named userSeeds.json
+fs.writeFile("usersSeeds.json", usersSeedJson, (err) => {
+  if (err) {
+    console.error("Error writing to file", err);
+  } else {
+    console.log("File has been saved");
+  }
+});
