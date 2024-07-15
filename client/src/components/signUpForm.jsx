@@ -12,13 +12,13 @@ const SignupForm = () => {
   const [validated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
-
+//   const [sign, result] = useMutation(ADD_USER)
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserFormData({ ...userFormData, [name]: value });
   };
 
-//   const [sign, result] = useMutation(ADD_USER)
+
 
 //   useEffect(() => {
 //     if (result.data) {
@@ -64,7 +64,7 @@ const SignupForm = () => {
 export default SignupForm;
 
 
-// <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+// {/* <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
 // {/* show alert if server response is bad */}
 // <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
 //   Something went wrong with your signup!
@@ -114,4 +114,4 @@ export default SignupForm;
 //   variant='success'>
 //   Submit
 // </Button>
-// </Form>
+// </Form> */}
