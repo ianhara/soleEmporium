@@ -6,7 +6,7 @@
     "scripts": {
         "build": "cd client && npm i && npm run build && cp -r ./dist ../server/dist && cd ../server && npm i ",
         "server": "cd server && npm run watch",
-        "client": "cd client && npm run start",
+        "client": "cd client && npm run dev",
         "dev": "concurrently \"npm run server\" \"npm run client\"",
         "start": "cd server && cross-env NODE_ENV=production node server.js",
         "seed": "cd server && npm run seed"
