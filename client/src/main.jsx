@@ -13,7 +13,14 @@ import Stores from './pages/Stores.jsx';
 import Error from './pages/ErrorPage';
 
 import ProductInfo from './pages/ProductInfo.jsx'
+import AuthService from './utils/auth.js'
 
+
+// Removed stale/expired tokens when running app first time
+let storedToken = AuthService.getToken()
+if (storedToken && AuthService.isTokenExpired(storedToken)) {
+  AuthService.logout()
+}
 
 
 const router = createBrowserRouter([
