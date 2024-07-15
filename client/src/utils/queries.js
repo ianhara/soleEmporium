@@ -17,17 +17,17 @@ export const GET_ALL_PRODUCTS = gql`
 
 // get single product
 export const GET_PRODUCT = gql`
-  query GetProduct {
-    product(productId: $productId) {
-      _id
-      name
-      images
-      description
-      price
-      size
-      stock
-    }
+  query Query($productId: ID!) {
+  product(productId: $productId) {
+    _id
+    name
+    images
+    description
+    price
+    size
+    stock
   }
+}
 `;
 
 // get all orders

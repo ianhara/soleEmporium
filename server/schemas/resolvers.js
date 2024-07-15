@@ -27,8 +27,9 @@ const resolvers = {
     },
     // get single product
     product: async (_, { productId }, context) => {
-      if(!context.user)
-        throw AuthenticationError
+      console.log("Product ID: " + productId)
+      // if(!context.user)
+      //   throw AuthenticationError
       try {
         const product = await Product.findById(productId);
         if (!product) {
