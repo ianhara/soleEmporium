@@ -27,8 +27,9 @@ const resolvers = {
     },
     // get single product
     product: async (_, { productId }, context) => {
-      if(!context.user)
-        throw AuthenticationError
+      console.log("Product ID: " + productId)
+      // if(!context.user)
+      //   throw AuthenticationError
       try {
         const product = await Product.findById(productId);
         if (!product) {
@@ -161,6 +162,7 @@ const resolvers = {
       }
 
       let payload = { email: foundUser.email, _id: foundUser._id }
+     
       return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '2h' })
 
     },
