@@ -4,7 +4,7 @@ import { Navbar, Nav, Container, Modal, Tab, Form } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import LoginForm from './LoginForm';
-import SignUpForm from './SignUpForm'
+import SignUpForm from './signUpForm'
 import Auth from '../utils/auth'
 
 
