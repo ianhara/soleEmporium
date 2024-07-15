@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Modal, Tab, Form } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import LoginForm from './LoginForm';
+import SignUpForm from './SignUpForm'
+import Auth from '../utils/auth'
 
 
 const AppNavbar = () => {
@@ -24,8 +27,12 @@ const AppNavbar = () => {
                 Stores
               </Nav.Link>
 
-              
-                <Nav.Link onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
+                {
+                  Auth.loggedIn() ? 
+                  <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
+                :
+                  <Nav.Link onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
+                }
             </Nav>
 
 
@@ -73,10 +80,10 @@ const AppNavbar = () => {
           <Modal.Body>
             <Tab.Content>
               <Tab.Pane eventKey='login'>
-                {/* <LoginForm handleModalClose={() => setShowModal(false)} /> */}
+                <LoginForm handleModalClose={() => setShowModal(false)} />
               </Tab.Pane>
               <Tab.Pane eventKey='signup'>
-                {/* <SignUpForm handleModalClose={() => setShowModal(false)} /> */}
+                <SignUpForm handleModalClose={() => setShowModal(false)} />
               </Tab.Pane>
             </Tab.Content>
           </Modal.Body>
