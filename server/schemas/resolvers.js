@@ -161,6 +161,7 @@ const resolvers = {
       }
 
       let payload = { email: foundUser.email, _id: foundUser._id }
+     
       return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '2h' })
 
     },

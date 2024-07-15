@@ -38,7 +38,7 @@ const AppNavbar = () => {
 
           </Navbar.Collapse>
 {/* Search Bar */}
-          <Form inline>
+          <Form inline="true">
         <Row>
           <Col xs="auto">
             <Form.Control

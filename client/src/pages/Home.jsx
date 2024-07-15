@@ -9,7 +9,7 @@ const Home = () => {
   });
   
   const productList = data?.products || []; 
-  console.log(productList);
+  // console.log(productList);
     return (
       <div className="homePage">
         <div className="row">
