@@ -9,7 +9,7 @@ const Cart = () => {
   return (
     <div className="signUp">
       <h1>Cart</h1>
-      <p>Cart Page</p>
+  
 
       {cart.length ? (
         cart.map((product) => (
