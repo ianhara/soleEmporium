@@ -1,7 +1,7 @@
 function Stores() {
     return (
         <>
-            <div>
+            <div >
                 <h2>Store Locations</h2>
                 <p className='intro'>
                     We have our store outlets in different locations.
