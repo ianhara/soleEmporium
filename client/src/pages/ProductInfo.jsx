@@ -19,9 +19,9 @@ function ProductInfo() {
   
     
   return (
-    <div>
+    <div class="d-flex justify-content-center">
       {/* ProductInfo; {id} */}
-    <Card>
+    <Card style={{ width: '18rem' }}>
                 {proID.images && proID.images[0] && <Card.Img variant="body" src={proID.images[0]} />}
                 <Card.Body>
                     <Card.Title>{proID.name}</Card.Title>
@@ -30,6 +30,12 @@ function ProductInfo() {
                     </Card.Text>
                     <Card.Text>
                         ${proID.price}
+                    </Card.Text>
+                    <Card.Text button variant="primary" >
+                        Sizes {proID.size}
+                    </Card.Text>
+                    <Card.Text>
+                        {proID.stock}
                     </Card.Text>
                     <Button variant="primary">Add to cart</Button>
                 </Card.Body>
