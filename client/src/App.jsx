@@ -5,7 +5,7 @@ import {
   ApolloProvider,
   createHttpLink,
 } from '@apollo/client';
-import{setContext} from "@apollo/client/link/context"
+import { setContext } from "@apollo/client/link/context"
 import { StoreProvider } from './utils/storeContext';
 
 import Nav from './components/Nav';
@@ -35,11 +35,11 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <StoreProvider>
-      <div>
+        <div>
           <Nav />
           <Outlet />
           <Footer />
-      </div>
+        </div>
       </StoreProvider>
     </ApolloProvider>
   );

@@ -127,3 +127,18 @@ export const GET_USER = gql`
     }
   }
 `;
+
+export const GET_CART = gql`
+query getCart {
+  cart {
+    products {
+      _id
+      price
+      quantity
+      size
+      productId
+    }
+  }
+}
+
+`

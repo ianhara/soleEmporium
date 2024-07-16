@@ -14,6 +14,7 @@ import Error from './pages/ErrorPage';
 
 import ProductInfo from './pages/ProductInfo.jsx'
 import AuthService from './utils/auth.js'
+import Cart from './pages/Cart'
 
 
 // Removed stale/expired tokens when running app first time
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: '/products/:id',
         element: <ProductInfo />
+      }, 
+      {
+        path: '/Cart',
+        element: <Cart />
       }, 
     
     ],

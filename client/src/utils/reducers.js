@@ -46,14 +46,10 @@ import {
         };
   
       case REMOVE_FROM_CART:
-        let newState = state.cart.filter((product) => {
-          return product._id !== action._id;
-        });
-  
         return {
           ...state,
-          cartOpen: newState.length > 0,
-          cart: newState,
+          cartOpen: state.cart.filter((product) => product._id !== action._id).length > 0,
+          cart: state.cart.filter((product) => product._id !== action._id),
         };
   
       case CLEAR_CART:
