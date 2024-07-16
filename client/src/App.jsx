@@ -10,6 +10,7 @@ import { StoreProvider } from './utils/storeContext';
 
 import Nav from './components/Nav';
 import Footer from './components/Footer';
+import { StoreProvider } from './utils/GlobalState';
 
 
 const httpLink = createHttpLink({

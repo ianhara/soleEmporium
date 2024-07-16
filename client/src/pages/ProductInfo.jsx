@@ -2,46 +2,64 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/client';
 import { GET_PRODUCT } from '../utils/queries';
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button, Row, Col } from 'react-bootstrap';
 import {ADD_TO_CART} from '../utils/actions'
 import {useStoreContext} from '../utils/storeContext'
 
 function ProductInfo() {
     const { id } = useParams();
-
+    console.log(id)
     const { loading, error, data } = useQuery(GET_PRODUCT, {
         variables: { productId: id },
     });
     if (error) {
         console.log(JSON.stringify(error))
     }
-    console.log(data)
+
 
     const [state, dispatch] = useStoreContext()
 
     const proID = data?.product || {};
-
-    const handleAddItem = () => {
-        dispatch({type: ADD_TO_CART, product: proID})
-    }
+    console.log(proID)
+    // const handleAddItem = () => {
+    //     dispatch({type: ADD_TO_CART, product: proID})
+    // }
 
     return (
-        <div>
-            {/* ProductInfo; {id} */}
-            <Card>
+
+        <Row>
+            <Col lg={6}>
                 {proID.images && proID.images[0] && <Card.Img variant="body" src={proID.images[0]} />}
-                <Card.Body>
-                    <Card.Title>{proID.name}</Card.Title>
-                    <Card.Text>
-                        {proID.description}
-                    </Card.Text>
-                    <Card.Text>
-                        ${proID.price}
-                    </Card.Text>
-                    <Button onClick={handleAddItem} variant="primary">Add to cart</Button>
-                </Card.Body>
-            </Card>
-        </div>
+            </Col>
+            <Col lg={6}>
+                <Card >
+                    <Card.Body>
+                        <Card.Title>{proID.name}</Card.Title>
+                        <Card.Text>
+                            {proID.description}
+                        </Card.Text>
+                        <Card.Text>
+                            ${proID.price}
+                        </Card.Text>
+                        <Card.Text  >
+                            Sizes
+                            <select name="size">
+
+                                {proID.size && proID.size.map((product, i) => (
+                                    <option key={i} value={product}>{product}</option>
+                                ))}
+
+                            </select>
+                        </Card.Text>
+                        <Card.Text>
+                            {proID.stock}
+                        </Card.Text>
+                        <button className="btn  btn-primary">Add to cart</button>
+                    </Card.Body>
+                </Card>
+            </Col>
+        </Row>
+
     );
 }
 
