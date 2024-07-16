@@ -14,7 +14,7 @@ const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 const Cart = () => {
   const { cart, toggleCart, dispatch } = useCartContext(); // Replace with your actual cart context hook
 
-  const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
+  //const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
 
   useEffect(() => {
     if (data) {
