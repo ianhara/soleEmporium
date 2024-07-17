@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 // import { loadStripe } from '@stripe/stripe-js';
 import { useLazyQuery, useQuery } from '@apollo/client';
-import { Button } from 'react-bootstrap';
-
+import Card from 'react-bootstrap/Card';
 
 import CartItem from '../components/CartItem';
 import Auth from '../utils/auth';
-import { ADD_MULTIPLE_TO_CART } from '../utils/actions';
+import { ADD_MULTIPLE_TO_CART, SET_CART } from '../utils/actions';
 import { useStoreContext } from '../utils/GlobalState';
 import { GET_CART } from '../utils/queries';
 
@@ -14,15 +13,6 @@ import { GET_CART } from '../utils/queries';
 
 const Cart = () => {
   const [state, dispatch] = useStoreContext(); // Replace with your actual cart context hook
-  const {loading, data} = useQuery(GET_CART)
-
-  useEffect(() => {
-    if(data?.cart) {
-      dispatch({type: ADD_MULTIPLE_TO_CART, products: data.cart.products})
-    }
-  }, [data?.cart])
-
-  //const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
 
   // useEffect(() => {
   //   if (data) {
@@ -32,21 +22,10 @@ const Cart = () => {
   //   }
   // }, [data]);
 
-  // useEffect(() => {
-  //   async function getCart() {
-  //     const cart = await idbPromise('cart', 'get');
-  //     dispatch({ type: ADD_MULTIPLE_TO_CART, products: [...cart] });
-  //   }
-
-  //   if (!cart.length) {
-  //     getCart();
-  //   }
-  // }, [cart.length, dispatch]);
-
   function calculateTotal() {
     let sum = 0;
     state.cart.forEach((item) => {
-      sum += item.price * item.purchaseQuantity;
+      sum += item.price * item.quantity;
     });
     return sum.toFixed(2);
   }
@@ -65,35 +44,27 @@ const Cart = () => {
     // });
   }
 
-
   return (
-    <div className="cart">
+    <div style={{
+      padding: 50,
+    }}>
       <h2>Shopping Cart</h2>
-      {state.cart.length ? (
-        <div className="cart-product">
-          {state.cart.map((item) => (
-            <CartItem key={item.productId} item={item} />
-          ))}
-{/* className="flex-row space-between" */}
-          <div>
+      {state.cart.length ?
+        <div>
+          {
+            state.cart.map((item, i) => {
+              return <CartItem key={item._id} item={item} />
+            })
+          }
+          <div className="flex-row space-between">
             <strong>Total: ${calculateTotal()}</strong>
-            <br></br>
-            {Auth.loggedIn() ? (
-              
-              <Button variant="secondary" onClick={submitCheckout}>Checkout</Button>
-            ) : (
-              <span>(log in to check out)</span>
-            )}
           </div>
         </div>
-      ) : (
+        :
         <h3>
-          <span role="img" aria-label="shocked">
-            😱
-          </span>
           You haven't added anything to your cart yet!
         </h3>
-      )}
+      }
     </div>
   );
 };

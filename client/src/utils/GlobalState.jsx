@@ -4,14 +4,20 @@ import { reducer } from './reducers'
 const StoreContext = createContext();
 const { Provider } = StoreContext;
 
-const StoreProvider = ({ value = [], ...props }) => {
-  const [state, dispatch] = useReducer(reducer, {
+const getInitialState = () => {
+  let obj = JSON.parse(window.localStorage.getItem('cart')) || {
     products: [],
     cart: [],
     cartOpen: false,
     categories: [],
     currentCategory: '',
-  });
+  }
+
+  return obj
+}
+
+const StoreProvider = ({ value = [], ...props }) => {
+  const [state, dispatch] = useReducer(reducer, getInitialState());
 
   return <Provider value={[state, dispatch]} {...props} />;
 };

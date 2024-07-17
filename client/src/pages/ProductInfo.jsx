@@ -7,7 +7,7 @@ import { ADD_TO_CART } from '../utils/actions';
 import { useStoreContext } from '../utils/GlobalState';
 
 function ProductInfo() {
-    const [productInfo, setProductInfo] = useState({});
+    const [productInfo, setProductInfo] = useState(0);
     const [showModal, setShowModal] = useState(false);
     const { id } = useParams();
     const navigate = useNavigate();
@@ -25,25 +25,16 @@ function ProductInfo() {
     const proID = data?.product || {};
     useEffect(() => {
         if (!loading) {
-            console.log(proID)
-            setProductInfo({
-                productId: proID._id,
-                quantity: 1,
-                price: proID.price,
-                size: proID.size && proID.size[0]
-            })
+            setProductInfo(proID.size[0])
         }
     }, [proID, loading])
 
     const handleDropDown = (e) => {
-        setProductInfo({
-            ...productInfo,
-            size: e.target.value,
-        });
+        setProductInfo(e.target.value*1)
     }
 
     const handleAddItem = () => {
-        dispatch({type: ADD_TO_CART, product: {...proID, size: productInfo.size} });
+        dispatch({type: ADD_TO_CART, product: {...proID, quantity: 1, size: productInfo} });
         setShowModal(true);
     };
 
