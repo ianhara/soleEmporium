@@ -12,6 +12,7 @@ const SignupForm = () => {
   const [validated, setValidated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
+  const [userCreated, setUserCreated] = useState(false);
  const [sign, result] = useMutation(CREATE_USER);
 
 
@@ -28,7 +29,8 @@ const SignupForm = () => {
 
   useEffect(() => {
     if (result.data) {
-      Auth.login(result.data.token);
+      // Update to show user created message instead of logging in
+      setUserCreated(true);
     }
   }, [result.data])
 
@@ -56,9 +58,14 @@ const SignupForm = () => {
               }
           }
       });
-      if(data) {
-        Auth.login(data.createuser.token);
-      }
+ // Reset form fields after successful submission
+ setUserFormData({
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+});
+      
 
     } catch (err) {
       console.error(err);
@@ -81,6 +88,12 @@ const SignupForm = () => {
 <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
   Something went wrong with your signup!
 </Alert>
+
+{/* Show success message when user is created */}
+<Alert dismissible onClose={() => setUserCreated(false)} show={userCreated} variant='success'>
+          User created You may now sign in!
+        </Alert>
+
 <Form.Group className='mb-3'>
   <Form.Label htmlFor='FirstName'>FirstName</Form.Label>
   <Form.Control
