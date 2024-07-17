@@ -27,6 +27,7 @@ const init = async () => {
                     products: [{
                         productId: firstProduct._id,
                         quantity: 1,
+                        size: firstProduct.size[Math.floor(Math.random()*(firstProduct.size.length))],
                         price: firstProduct.price
                     }],
                     user: user._id

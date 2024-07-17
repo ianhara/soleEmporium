@@ -1,4 +1,4 @@
-const { User, Order, Product } = require('../models');
+const { User, Order, Product, Cart } = require('../models');
 const bcrypt = require('bcrypt');
 const { configDotenv } = require('dotenv');
 const jwt = require('jsonwebtoken')
@@ -87,6 +87,22 @@ const resolvers = {
         throw new Error('Failed to fetch user!');
       }
     },
+    cart: async (_, __, context) => {
+      console.log("context user",context)
+      if (!context.user) {
+        throw new Error('Not authenticated');
+      }
+
+      let cart = await Cart.findOne({user: context.user._id})
+      console.log(cart)
+      
+      if (!cart) {
+        cart = await Cart.create({user: context.user._id, products: []})
+      }
+
+      await cart.populate('user', 'products.0.productId')
+      return cart
+    }
   },
 
   Mutation: {
