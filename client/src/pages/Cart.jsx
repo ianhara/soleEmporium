@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 // import { loadStripe } from '@stripe/stripe-js';
 import { useLazyQuery, useQuery } from '@apollo/client';
+import { Button } from 'react-bootstrap';
 
 
 import CartItem from '../components/CartItem';
@@ -69,16 +70,17 @@ const Cart = () => {
     <div className="cart">
       <h2>Shopping Cart</h2>
       {state.cart.length ? (
-        <div>
+        <div className="cart-product">
           {state.cart.map((item) => (
             <CartItem key={item.productId} item={item} />
           ))}
-
-          <div className="flex-row space-between">
+{/* className="flex-row space-between" */}
+          <div>
             <strong>Total: ${calculateTotal()}</strong>
-
+            <br></br>
             {Auth.loggedIn() ? (
-              <button onClick={submitCheckout}>Checkout</button>
+              
+              <Button variant="secondary" onClick={submitCheckout}>Checkout</Button>
             ) : (
               <span>(log in to check out)</span>
             )}
