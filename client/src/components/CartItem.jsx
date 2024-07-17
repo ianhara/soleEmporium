@@ -3,6 +3,8 @@ import { useStoreContext } from "../utils/GlobalState";
 import { REMOVE_FROM_CART, UPDATE_CART_QUANTITY } from "../utils/actions";
 
 const CartItem = ({ item }) => {
+  const { productId, name, price, purchaseQuantity, images, size} = item;
+  const firstImage = images && images.length > 0 ? images[0]: '';
   const [, dispatch] = useStoreContext();
 
   const removeFromCart = item => {
@@ -31,14 +33,14 @@ const CartItem = ({ item }) => {
   return (
     <div className="flex-row">
       <div>
-        <img
-          src={`/images/${item.image}`}
-          alt=""
-          style={{ maxWidth: '6rem' }}
-        />
+        {firstImage && <img src={firstImage} alt={name} className="cart-item-image"/>}
       </div>
       <div className="flex-column">
-        <div>{item.name}, ${item.price}</div>
+        <span>{item.name}</span> 
+        <br></br>
+        <span>Size: {item.size}</span>
+        <br></br>
+        <span>${item.price}</span>
         <div className="flex-row align-center">
           <span>Qty:</span>
           <input
