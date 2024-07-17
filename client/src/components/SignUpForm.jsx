@@ -12,7 +12,6 @@ const SignupForm = () => {
   const [validated, setValidated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
-  const [userCreated, setUserCreated] = useState(false);
  const [sign, result] = useMutation(CREATE_USER);
 
 
@@ -29,8 +28,7 @@ const SignupForm = () => {
 
   useEffect(() => {
     if (result.data) {
-      // Update to show user created message instead of logging in
-      setUserCreated(true);
+      Auth.login(result.data.token);
     }
   }, [result.data])
 
@@ -58,14 +56,9 @@ const SignupForm = () => {
               }
           }
       });
- // Reset form fields after successful submission
- setUserFormData({
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-});
-      
+      if(data) {
+        Auth.login(data.createuser.token);
+      }
 
     } catch (err) {
       console.error(err);
@@ -88,17 +81,11 @@ const SignupForm = () => {
 <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
   Something went wrong with your signup!
 </Alert>
-
-{/* Show success message when user is created */}
-<Alert dismissible onClose={() => setUserCreated(false)} show={userCreated} variant='success'>
-          User created You may now sign in!
-        </Alert>
-
 <Form.Group className='mb-3'>
-  <Form.Label htmlFor='FirstName'>FirstName</Form.Label>
+  <Form.Label htmlFor='FirstName'>First Name</Form.Label>
   <Form.Control
     type='text'
-    placeholder='Your firstname'
+    placeholder='first name'
     name='firstName'
     onChange={handleInputChange}
     value={userFormData.firstName || ''}
@@ -108,10 +95,10 @@ const SignupForm = () => {
 </Form.Group>
 
 <Form.Group className='mb-3'>
-  <Form.Label htmlFor='LastName'>LastName</Form.Label>
+  <Form.Label htmlFor='LastName'>Last Name</Form.Label>
   <Form.Control
     type='text'
-    placeholder='Your LastName'
+    placeholder='last name'
     name='lastName'
     onChange={handleInputChange}
     value={userFormData.lastName}
@@ -124,7 +111,7 @@ const SignupForm = () => {
   <Form.Label htmlFor='email'>Email</Form.Label>
   <Form.Control
     type='text'
-    placeholder='Your email address'
+    placeholder='email address'
     name='email'
     onChange={handleInputChange}
     value={userFormData.email}
@@ -135,10 +122,10 @@ const SignupForm = () => {
 </Form.Group>
 
 <Form.Group className='mb-3'>
-  <Form.Label htmlFor='Password'>password</Form.Label>
+  <Form.Label htmlFor='Password'>Password</Form.Label>
   <Form.Control
     type='password'
-    placeholder='Your password'
+    placeholder='password'
     name='password'
     onChange={handleInputChange}
     value={userFormData.password}
@@ -154,7 +141,7 @@ const SignupForm = () => {
 <Button
   disabled={!(userFormData.firstName && userFormData.lastName && userFormData.email && userFormData.password)}
   type='submit'
-  variant='success'>
+  variant='danger'>
   Submit
 </Button>
 </Form> 

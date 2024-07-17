@@ -40,6 +40,11 @@ function ProductInfo() {
 
     const handleCloseModal = () => setShowModal(false);
 
+    const handleGoToShop = () => {
+        setShowModal(false);
+        navigate('/ProductCardPage');
+    }
+
     const handleGoToCart = () => {
         setShowModal(false);
         navigate('/cart');
@@ -87,10 +92,10 @@ function ProductInfo() {
                 <p>{proID.name} has been added to your cart.</p>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={handleCloseModal}>
+                <Button variant="secondary" onClick={handleGoToShop}>
                     Continue Shopping
                 </Button>
-                <Button variant="primary" onClick={handleGoToCart}>
+                <Button variant="danger" onClick={handleGoToCart}>
                     Go to Cart
                 </Button>
             </Modal.Footer>

@@ -4,17 +4,13 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 
 import App from "./App.jsx"
-
-
 import Home from './pages/Home';
-
 import Stores from './pages/Stores.jsx';
-
 import Error from './pages/ErrorPage';
-
-import ProductInfo from './pages/ProductInfo.jsx'
-import AuthService from './utils/auth.js'
-import Cart from './pages/Cart'
+import ProductCardPage from './pages/ProductCardPage.jsx';
+import ProductInfo from './pages/ProductInfo.jsx';
+import AuthService from './utils/auth.js';
+import Cart from './pages/Cart';
 
 
 // Removed stale/expired tokens when running app first time
@@ -42,6 +38,10 @@ const router = createBrowserRouter([
         path: '/products/:id',
         element: <ProductInfo />
       }, 
+      {
+        path: 'productCardPage',
+        element: <ProductCardPage />
+      },
       {
         path: '/Cart',
         element: <Cart />

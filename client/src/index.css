@@ -1,3 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
+.customNavLink:hover {
+  color: rgb(230, 230, 230);
+  text-decoration: underline;
+  text-decoration-color: red;
+}
+
+.modalNavLink {
+  color: white; 
+  font-size: 20px;
+  background-color: rgb(126, 122, 122); 
+  border-radius: 0.25rem;
+  padding: 0.2rem 0.2rem;
+  margin-right: 0.3rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.modalNavLink:hover, 
+.modalNavLink.active {
+  background-color: #848484;
+  color: white;
+}
+
+.modalNavLink:focus {
+  box-shadow: none;
+}
+
+.navStyling {
+  font-family: 'Orbitron';
+  font-size: 15px;
+  padding: 10px;
+}
+
+.navLogo {
+  font-family: 'Caveat';
+  /* font-family: 'Orbitron'; */
+  font-size: 40px;
+}
+
+.logoImage {
+  width: 10%;
+  height: auto;
+}
+
 .shop{
   color:white;
   position: relative;
@@ -9,9 +55,52 @@
   background-position: center;
 }
 
+.locationsPage {
+  padding: 20px;
+  background-color: rgb(124, 120, 120);
+}
+
+.productCardPage {
+  background-color: rgb(111, 109, 109);
+}
+
+.product-card {
+  background-color: rgb(184, 183, 183);
+  border: none;
+  transition: transform 0.2s;
+  text-align: left;
+  width: 90%;
+  height: 600px;
+}
+
+.product-card:hover {
+  transform: scale(1.1);
+}
+
+.productCardImage {
+  width: 100%;
+  height: 300px;
+}
+
+.productLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+.productLink:hover {
+  text-decoration: underline;
+  text-decoration-color: red;
+  color: rgb(238, 232, 232);
+}
+
+.product-price {
+  margin-top: 0.25rem
+}
+
 .cart {
-  margin: 10px;
-  padding: 10px;
+  background-color: rgb(189, 186, 186);
+  /* margin: 10px; */
+  padding: 20px;
 }
 
 .cart-item-image {

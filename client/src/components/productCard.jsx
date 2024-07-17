@@ -4,20 +4,20 @@ import { Link } from 'react-router-dom';
 
 function ProductCard({ product }) {
   return (
-    // <div className="productCard" key={product._id}>
-    // <img src={product.images[0]} alt={product.name} />
-    // <h3>{product.name}</h3>
-    // <p>{product.description}</p>
-    // <p>${product.price}</p>
-    // </div>
-    <Link to={`/products/${product._id}`}>
-    <Card >
-    <Card.Img variant="top" src={product.images[0]} />
-    <Card.Body>
-      <Card.Title>{product.name}</Card.Title>
-    </Card.Body>
-  </Card>
-  </Link>
+    <div>
+    <Card className="product-card mb-4">
+            <Card.Img variant="top" src={product.images[0]} className="productCardImage"/>
+        <Card.Body>
+            <Card.Title>
+                <Link to={`/products/${product._id}`} className="productLink">
+                    {product.name}
+                </Link>
+            </Card.Title>
+            <Card.Text>{product.description}</Card.Text>
+            <Card.Text className="product-price">Price: ${product.price}</Card.Text>
+        </Card.Body>
+    </Card>
+    </div>
   )
 }
 

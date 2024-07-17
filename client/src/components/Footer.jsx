@@ -4,6 +4,8 @@ import Navbar from 'react-bootstrap/Navbar';
 const Footer = () => {
     const styles = {
         headerStyle: {
+            fontSize: "15px",
+            fontFamily: "Orbitron",
             marginLeft: "400px"
         },
 
@@ -22,4 +24,5 @@ const Footer = () => {
 };
 
 export default Footer;
+
 
