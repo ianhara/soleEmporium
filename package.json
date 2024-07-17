@@ -4,7 +4,7 @@
     "description": "",
     "main": "server.js",
     "scripts": {
-        "build": "cd client && npm i && npm run build && cp -r ./dist ../server/dist && cd ../server && npm i ",
+        "build": "npm i vite -g && cd client && npm i && npm run build && cp -r ./dist ../server/dist && cd ../server && npm i ",
         "server": "cd server && npm run watch",
         "client": "cd client && npm run dev",
         "dev": "concurrently \"npm run server\" \"npm run client\"",
@@ -12,18 +12,7 @@
         "seed": "cd server && npm run seed"
     },
     "devDependencies": {
-        "@vitejs/plugin-react": "^4.2.1",
         "concurrently": "^6.2.2",
-        "cross-env": "^7.0.3",
-        "vite": "^5.3.3"
-    },
-    "dependencies": {
-        "@apollo/server": "^4.10.4",
-        "bcrypt": "^5.1.1",
-        "dotenv": "^16.4.5",
-        "express": "^4.19.2",
-        "jsonwebtoken": "^9.0.2",
-        "jwt-decode": "^4.0.0",
-        "mongoose": "^8.5.1"
+        "cross-env": "^7.0.3"
     }
 }
