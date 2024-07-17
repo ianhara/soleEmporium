@@ -1,4 +1,11 @@
 const typeDefs = `
+
+  type Cart {
+    _id: ID!
+    user: User!
+    products: [OrderProduct]
+  }
+
   type Product {
     _id: ID!
     name: String!
@@ -30,6 +37,7 @@ const typeDefs = `
   type OrderProduct {
     _id: ID!
     quantity: Int!
+    productId: ID!
     size: [Float]!
     price: Float!
   }
@@ -106,6 +114,7 @@ const typeDefs = `
     order(orderId: ID!): Order
     users: [User]
     user(userId: ID!): User
+    cart: Cart!
   }
 
   type Mutation {

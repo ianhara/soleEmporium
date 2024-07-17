@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/client';
 import { GET_PRODUCT } from '../utils/queries';
 import { Card, Button, Row, Col } from 'react-bootstrap';
+import {ADD_TO_CART} from '../utils/actions'
+import {useStoreContext} from '../utils/storeContext'
 
 function ProductInfo() {
     const [productInfo, setProductInfo] = useState({});
@@ -16,6 +18,8 @@ function ProductInfo() {
         console.log(JSON.stringify(error))
     }
 
+
+    const [state, dispatch] = useStoreContext()
 
     const proID = data?.product || {};
     useEffect(() => {  
@@ -39,6 +43,10 @@ function ProductInfo() {
  }  
 
   
+    console.log(proID)
+    // const handleAddItem = () => {
+    //     dispatch({type: ADD_TO_CART, product: proID})
+    // }
 
     return (
 
