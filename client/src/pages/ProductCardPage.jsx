@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_PRODUCTS } from '../utils/queries';
-import ProductCard from '../components/ProductCard';
+import ProductCard from '../components/productCard';
 
 const ProductCardPage = () => {
   const { loading, error, data } = useQuery(GET_ALL_PRODUCTS);
