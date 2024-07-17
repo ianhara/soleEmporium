@@ -9,7 +9,7 @@
     },
     {
         "name": "Vans Check Board",
-        "images": [ "/images/vans-check2.png", "/images/vans-check3.png", "/images/vans-check4.png"],
+        "images": [ "/images/vans-check3.png", "/images/vans-check2.png", "/images/vans-check4.png"],
         "price": 49.99,
         "description": "The Vans check board sneakers are a trendy and fashionable choice for casual wear. Featuring the iconic checkered pattern, these sneakers add a bold and playful touch to any outfit. They provide comfort, style, and are perfect for skateboarding or everyday use.",
         "size": [8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12],
@@ -58,7 +58,8 @@
     },
     {
         "name": "Vans Old Skool Black",
-        "images": ["/images/oldskool2.png", "/images/oldskool3.png", "/images/oldskool4.png"],
+        "images": [
+             "/images/oldskool3.png", "/images/oldskool2.png", "/images/oldskool4.png"],
         "coverImage": "/images/oldskool2.png",
         "price": 44.99,
         "description": "The Vans old skool black sneakers are a timeless and versatile choice. With their classic design and all-black colorway, these sneakers offer a sleek and minimalist aesthetic. They provide comfort, durability, and are suitable for various occasions.",
@@ -156,7 +157,7 @@
     },
     {
         "name": "Vans Old Skool Grey",
-        "images": ["/images/vans-old-skool-grey.png", "/images/vansGray2.png", "/images/vansGray3.png", "/images/vansGray4.png"],
+        "images": ["/images/vansGray3.png", "/images/vans-old-skool-grey.png", "/images/vansGray2.png", "/images/vansGray4.png"],
         "price": 49.99,
         "description": "The Vans old skool grey sneakers are a popular choice for skateboarders and streetwear enthusiasts. With their classic low-top design and iconic side stripe, these sneakers offer both style and functionality. They are comfortable, versatile, and built to last.",
         "size": [8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12],
