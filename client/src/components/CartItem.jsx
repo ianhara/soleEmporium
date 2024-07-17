@@ -3,9 +3,7 @@ import { useStoreContext } from "../utils/GlobalState";
 import { REMOVE_FROM_CART, UPDATE_CART_QUANTITY } from "../utils/actions";
 
 const CartItem = ({ item }) => {
-  const { productId, name, price, purchaseQuantity, images, size} = item;
-  const firstImage = images && images.length > 0 ? images[0]: '';
-  const [, dispatch] = useStoreContext();
+  const [state, dispatch] = useStoreContext();
 
   const removeFromCart = item => {
     dispatch({
@@ -14,40 +12,34 @@ const CartItem = ({ item }) => {
     });
   };
 
-  const onChange = (e) => {
-    const value = e.target.value;
-    if (value === '0') {
-      dispatch({
-        type: REMOVE_FROM_CART,
-        _id: item._id
-      });
-    } else {
-      dispatch({
-        type: UPDATE_CART_QUANTITY,
-        _id: item._id,
-        purchaseQuantity: parseInt(value)
-      });
+  const handleQuantity = (e) => {
+    const value = e.target.value
+    if (value <= 0) {
+      return false
     }
+    dispatch({
+      type: UPDATE_CART_QUANTITY,
+      _id: item._id,
+      purchaseQuantity: parseInt(value)
+    });
   };
 
   return (
-    <div className="flex-row">
+    <div style={{marginBottom: 10}} className="flex-row">
       <div>
-        {firstImage && <img src={firstImage} alt={name} className="cart-item-image"/>}
+        <img
+          src={`${item.images[0]}`}
+          style={{ maxWidth: '250px' }}
+        />
       </div>
       <div className="flex-column">
-        <span>{item.name}</span> 
-        <br></br>
-        <span>Size: {item.size}</span>
-        <br></br>
-        <span>${item.price}</span>
+        <div><h3>{item.name}</h3>, <strong>${item.price}</strong></div>
         <div className="flex-row align-center">
           <span>Qty:</span>
           <input
             type="number"
-            placeholder="1"
-            value={item.purchaseQuantity}
-            onChange={onChange}
+            value={item.quantity}
+            onChange={handleQuantity}
           />
           <span
             role="button"
@@ -57,6 +49,7 @@ const CartItem = ({ item }) => {
           >
             🗑️
           </span>
+            <div>Size: {item.size}</div>
         </div>
       </div>
     </div>
