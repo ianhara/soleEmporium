@@ -6,7 +6,7 @@ import { useLazyQuery, useQuery } from '@apollo/client';
 import CartItem from '../components/CartItem';
 import Auth from '../utils/auth';
 import { ADD_MULTIPLE_TO_CART } from '../utils/actions';
-import { useStoreContext } from '../utils/storeContext';
+import { useStoreContext } from '../utils/GlobalState';
 import { GET_CART } from '../utils/queries';
 
 // const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');

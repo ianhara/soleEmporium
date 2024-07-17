@@ -6,7 +6,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from "@apollo/client/link/context"
-import { StoreProvider } from './utils/storeContext';
+
 
 import Nav from './components/Nav';
 import Footer from './components/Footer';
