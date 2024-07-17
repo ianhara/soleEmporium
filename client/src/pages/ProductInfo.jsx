@@ -1,15 +1,15 @@
-import React , { useState , useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/client';
 import { GET_PRODUCT } from '../utils/queries';
 import { Card, Button, Row, Col } from 'react-bootstrap';
-import {ADD_TO_CART} from '../utils/actions'
-import {useStoreContext} from '../utils/storeContext'
+import { ADD_TO_CART } from '../utils/actions'
+import { useStoreContext } from '../utils/GlobalState'
 
 function ProductInfo() {
     const [productInfo, setProductInfo] = useState({});
     const { id } = useParams();
-  
+
     const { loading, error, data } = useQuery(GET_PRODUCT, {
         variables: { productId: id },
     });
@@ -22,31 +22,32 @@ function ProductInfo() {
     const [state, dispatch] = useStoreContext()
 
     const proID = data?.product || {};
-    useEffect(() => {  
+    useEffect(() => {
         if (!loading) {
 
-        
-        console.log(proID)
+
+            console.log(proID)
+            setProductInfo({
+                productId: proID._id,
+                quantity: 1,
+                price: proID.price
+            })
+        }
+    }, [proID, loading])
+
+    const handleDropDown = (e) => {
         setProductInfo({
-            productId : proID._id , 
-            quantity : 1,
-            price : proID.price
-        })}
-    },[proID, loading] )
+            ...productInfo,
+            size: e.target.value
 
- const handleDropDown = (e) => {
-     setProductInfo({
-         ...productInfo,
-         size : e.target.value
-         
-     })
- }  
+        })
+    }
 
-  
+
     console.log(proID)
-    // const handleAddItem = () => {
-    //     dispatch({type: ADD_TO_CART, product: proID})
-    // }
+    const handleAddItem = () => {
+        dispatch({type: ADD_TO_CART, product: proID})
+    }
 
     return (
 
@@ -74,13 +75,13 @@ function ProductInfo() {
 
                             </select>
                         </Card.Text>
-                     
-                        <button className="btn  btn-primary">Add to cart</button>
-                        
-                    </Card.Body>
-                </Card>
-            </Col>
-        </Row>
+
+                        <button className="Btn  btn-primary" onClick={() => handleAddItem()}>Add to cart</button>
+
+            </Card.Body>
+        </Card>
+            </Col >
+        </Row >
 
     );
 }

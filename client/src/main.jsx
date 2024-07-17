@@ -14,11 +14,7 @@ import Error from './pages/ErrorPage';
 
 import ProductInfo from './pages/ProductInfo.jsx'
 import AuthService from './utils/auth.js'
-<<<<<<< HEAD
 import Cart from './pages/Cart'
-=======
-import Cart from './pages/Cart.jsx';
->>>>>>> main
 
 
 // Removed stale/expired tokens when running app first time
