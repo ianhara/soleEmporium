@@ -45,26 +45,25 @@ const Cart = () => {
   }
 
   return (
-    <div style={{
-      padding: 50,
-    }}>
-      <h2>Shopping Cart</h2>
-      {state.cart.length ?
-        <div>
-          {
-            state.cart.map((item, i) => {
-              return <CartItem key={item._id} item={item} />
-            })
-          }
-          <div className="flex-row space-between">
-            <strong>Total: ${calculateTotal()}</strong>
+    <div className="cart">
+      
+        <h2>Shopping Cart</h2>
+        {state.cart.length ?
+          <div>
+            {
+              state.cart.map((item, i) => {
+                return <CartItem key={item._id} item={item} />
+              })
+            }
+            <div className="flex-row space-between">
+              <strong>Total: ${calculateTotal()}</strong>
+            </div>
           </div>
-        </div>
-        :
-        <h3>
-          You haven't added anything to your cart yet!
-        </h3>
-      }
+          :
+          <h3>
+            You haven't added anything to your cart yet!
+          </h3>
+        }
     </div>
   );
 };

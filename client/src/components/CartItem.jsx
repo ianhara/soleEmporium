@@ -25,15 +25,15 @@ const CartItem = ({ item }) => {
   };
 
   return (
-    <div style={{marginBottom: 10}} className="flex-row">
+    <div style={{marginTop: '35px', marginBottom: '35px'}} className="flex-row">
       <div>
         <img
           src={`${item.images[0]}`}
-          style={{ maxWidth: '250px' }}
+          style={{ maxWidth: '15%' }}
         />
       </div>
       <div className="flex-column">
-        <div><h3>{item.name}</h3>, <strong>${item.price}</strong></div>
+        <div><h4>{item.name}</h4> <strong>${item.price}</strong></div>
         <div className="flex-row align-center">
           <span>Qty:</span>
           <input

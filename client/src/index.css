@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 .customNavLink:hover {
   color: rgb(230, 230, 230);
@@ -45,7 +46,7 @@
 }
 
 .shop{
-  color:white;
+  color:rgb(238, 232, 232);
   position: relative;
   bottom:800px;
   left:200px;
@@ -57,11 +58,13 @@
 
 .locationsPage {
   padding: 20px;
-  background-color: rgb(124, 120, 120);
+  background-color: rgb(157, 155, 155);
+  font-family: 'Kanit';
 }
 
 .productCardPage {
   background-color: rgb(111, 109, 109);
+  font-family: 'Kanit';
 }
 
 .product-card {
@@ -97,10 +100,31 @@
   margin-top: 0.25rem
 }
 
+.productInfoPage {
+  background-color: rgb(111, 109, 109);
+  font-family: 'Kanit';
+}
+
+.productInfoCard{
+  height: 100%;
+  width: 70%;
+}
+
+.productImageCard{
+  height: 100%;
+  width: 68.5%;
+  border-radius: 10px;
+  background-color: white;
+}
+
 .cart {
   background-color: rgb(189, 186, 186);
-  /* margin: 10px; */
   padding: 20px;
+  font-family: 'Kanit';
+}
+
+.cart h2{
+  font-size: 2rem;
 }
 
 .cart-item-image {
