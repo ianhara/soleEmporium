@@ -52,8 +52,8 @@ function ProductInfo() {
 
     return (
         <>
-        <Row>
-            <Col lg={6}>
+        <Row className="d-flex justify-content-center align-items-center productInfoPage">
+            <Col lg={6} className="productImageCard">
                 {proID.images && (
                     <Carousel>
                         {proID.images.map((image, index) => (
@@ -64,8 +64,9 @@ function ProductInfo() {
                     </Carousel>
                 )}
             </Col>
-            <Col lg={6}>
-                <Card style={{ height: '100%' }}>
+            {/* style={{ height: '100%' }} */}
+            <Col lg={6} className="productInfoCard">
+                <Card>
                     <Card.Body>
                         <Card.Title>{proID.name}</Card.Title>
                         <Card.Text>{proID.description}</Card.Text>
