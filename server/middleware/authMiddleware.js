@@ -1,12 +1,29 @@
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 
-const { GraphQLError } = require('graphql');
-const AuthenticationError = new GraphQLError('Could not authenticate user.', {
-  extensions: {
-    code: 'UNAUTHENTICATED',
-  },
-})
+const { AuthenticationError } = require('apollo-server');
+
+// const { GraphQLError } = require('graphql');
+
+const authenticateUser = (req) => {
+  const token = req.headers.authorization || '';
+  if (!token) {
+    throw new AuthenticationError('No token provided');
+  }
+  
+  try {
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    return decodedToken.user; // Assuming your token contains a `user` object
+  } catch (error) {
+    throw new AuthenticationError('Invalid/Expired token');
+  }
+};
+
+// const AuthenticationError = new GraphQLError('Could not authenticate user.', {
+//   extensions: {
+//     code: 'UNAUTHENTICATED',
+//   },
+// })
 
 // User must be authenticated
 const protect = async (context) => {
@@ -43,4 +60,4 @@ const admin = (context) => {
   }
 };
 
-module.exports = { protect, admin };
+module.exports = { protect, admin, authenticateUser };

@@ -6,12 +6,18 @@ const authMiddleware = require('./middleware/authMiddleware');
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 
+const { authenticateUser} = require('./middleware/authMiddleware');
+
 // const init = require('./seeder/seeder.js')
 const PORT = process.env.PORT || 3001;
 const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context: ({ req}) => {
+    const user = authenticateUser(req);
+    return { user};
+  }
 });
 
 // Create a new instance of an Apollo server with the GraphQL schema

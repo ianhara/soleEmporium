@@ -123,24 +123,25 @@ export const CREATE_USER = gql`
 //   }
 // `;
 
-// // update a user
-// export const UPDATE_USER = gql`
-//   mutation UpdateUser($updateInput: UpdateUserInput!) {
-//     updateUser(updateInput: $updateInput) {
-//       _id
-//       firstName
-//       lastName
-//       email
-//       address {
-//         street
-//         city
-//         state
-//         zip
-//         country
-//       }
-//     }
-//   }
-// `;
+// update a user
+export const UPDATE_USER = gql`
+  mutation UpdateUser($updateInput: UpdateUserInput!) {
+    updateUser(updateInput: $updateInput) {
+      _id
+      firstName
+      lastName
+      email
+      address {
+        street
+        city
+        state
+        zip
+        country
+      }
+    }
+  }
+`;
+
 
 // // delete user by ID
 // export const DELETE_USER = gql`

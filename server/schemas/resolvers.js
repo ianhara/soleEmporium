@@ -76,17 +76,30 @@ const resolvers = {
       }
     },
     // get single user
-    user: async (_, { userId }) => {
+    // user: async (_, { userId }) => {
+    //   try {
+    //     const user = await User.findById(userId);
+    //     if (!user) {
+    //       throw new Error('User not found!');
+    //     }
+    //     return user;
+    //   } catch (error) {
+    //     throw new Error('Failed to fetch user!');
+    //   }
+    // },
+    user: async (_, __, { user }) => {
       try {
-        const user = await User.findById(userId);
-        if (!user) {
+        const foundUser = await User.findById(user.id); // Assuming `user` in context contains `id`
+        if (!foundUser) {
           throw new Error('User not found!');
         }
-        return user;
+        return foundUser;
       } catch (error) {
         throw new Error('Failed to fetch user!');
       }
     },
+
+    
     cart: async (_, __, context) => {
       console.log("context user",context)
       if (!context.user) {

@@ -30,6 +30,7 @@ const AppNavbar = () => {
                 <>
                   <Nav.Link as={Link} to="/productCardPage" className="customNavLink">Shop</Nav.Link>
                   <Nav.Link as={Link} to="/cart" className="customNavLink">Cart</Nav.Link>
+                  <Nav.Link as={Link} to="/myAccount" className="customNavLink">My Account</Nav.Link>
                   <Nav.Link onClick={Auth.logout} className="customNavLink">Logout</Nav.Link>
                 </>
               ) : (
