@@ -11,6 +11,7 @@ import ProductCardPage from './pages/ProductCardPage.jsx';
 import ProductInfo from './pages/ProductInfo.jsx';
 import AuthService from './utils/auth.js';
 import Cart from './pages/Cart';
+import MyAccount from './pages/MyAccount.jsx';
 
 
 // Removed stale/expired tokens when running app first time
@@ -39,13 +40,17 @@ const router = createBrowserRouter([
         element: <ProductInfo />
       }, 
       {
-        path: 'productCardPage',
+        path: '/productCardPage',
         element: <ProductCardPage />
       },
       {
         path: '/Cart',
         element: <Cart />
       }, 
+      {
+        path: '/myAccount', 
+        element: <MyAccount />
+      },
     
     ],
   },

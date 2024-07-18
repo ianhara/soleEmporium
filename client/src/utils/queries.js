@@ -90,40 +90,58 @@ export const GET_ORDER = gql`
   }
 `;
 
-// get all users
-export const GET_ALL_USERS = gql`
-  query GetAllUsers {
-    users {
-      _id
-      firstName
-      lastName
-      email
-      address {
-        street
-        city
-        state
-        zip
-        country
-      }
-    }
-  }
-`;
+// // get all users
+// export const GET_ALL_USERS = gql`
+//   query GetAllUsers {
+//     users {
+//       _id
+//       firstName
+//       lastName
+//       email
+//       address {
+//         street
+//         city
+//         state
+//         zip
+//         country
+//       }
+//     }
+//   }
+// `;
 
-// get user by ID
+// // get user by ID
+// export const GET_USER = gql`
+//   query GetUser($userId: ID!) {
+//     user(userId: $userId) {
+//       _id
+//       firstName
+//       lastName
+//       email
+//       address {
+//         street
+//         city
+//         state
+//         zip
+//         country
+//       }
+//     }
+//   }
+// `;
+
 export const GET_USER = gql`
-  query GetUser($userId: ID!) {
-    user(userId: $userId) {
+  query GetUser {
+    user {
       _id
       firstName
       lastName
       email
       address {
-        street
-        city
-        state
-        zip
-        country
-      }
+         street
+         city
+         state
+         zip
+         country
+       }
     }
   }
 `;

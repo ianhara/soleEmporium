@@ -1,3 +1,4 @@
+// user(userId: ID!): User 
 const typeDefs = `
 
   type Cart {
@@ -51,11 +52,11 @@ const typeDefs = `
   }
 
   input AddressInput {
-    street: String!
-    city: String!
-    state: String!
-    zip: String!
-    country: String!
+    street: String
+    city: String
+    state: String
+    zip: String
+    country: String
   }
 
   input CreateProductInput{
@@ -113,7 +114,7 @@ const typeDefs = `
     orders: [Order]
     order(orderId: ID!): Order
     users: [User]
-    user(userId: ID!): User
+    user: User
     cart: Cart!
   }
 
